@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  learnSwift
 //
-//  Created by Aditya Patel on 19/07/21.
+//  Created by Aditya Patel   on 19/07/21.
 //  Copyright © 2021 AdityaPatel. All rights reserved.
 //
 
@@ -40,3 +40,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+import SwiftUI
+
+// This code can be found in the Swift package:
+// https://github.com/johnno1962/HotSwiftUI
+
+#if DEBUG
+import Combine
+
+private var loadInjectionOnce: () = {
+    guard objc_getClass("InjectionClient") == nil else {
+        return
+    }
+    Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")!.load()
+}()
+
+public let injectionObserver = InjectionObserver()
+
+public class InjectionObserver: ObservableObject {
+    @Published var injectionNumber = 0
+    var cancellable: AnyCancellable? = nil
+    let publisher = PassthroughSubject<Void, Never>()
+    init() {
+        cancellable = NotificationCenter.default.publisher(for:
+            Notification.Name("INJECTION_BUNDLE_NOTIFICATION"))
+            .sink { [weak self] change in
+            self?.injectionNumber += 1
+            self?.publisher.send()
+        }
+    }
+}
+
+extension SwiftUI.View {
+    public func eraseToAnyView() -> some SwiftUI.View {
+        _ = loadInjectionOnce
+        return AnyView(self)
+    }
+    public func loadInjection() -> some SwiftUI.View {
+        return eraseToAnyView()
+    }
+    public func onInjection(bumpState: @escaping () -> ()) -> some SwiftUI.View {
+        return self
+            .onReceive(injectionObserver.publisher, perform: bumpState)
+            .eraseToAnyView()
+    }
+}
+#else
+extension SwiftUI.View {
+    @inline(__always)
+    public func eraseToAnyView() -> some SwiftUI.View { return self }
+    @inline(__always)
+    public func loadInjection() -> some SwiftUI.View { return self }
+    @inline(__always)
+    public func onInjection(bumpState: @escaping () -> ()) -> some SwiftUI.View {
+        return self
+    }
+}
+#endif

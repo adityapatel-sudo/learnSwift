@@ -205,7 +205,9 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
+				Base,
 			);
 			mainGroup = B6F738041CF8AAB1F572F798;
 			productRefGroup = B6F73A50B87756542E8C3F4C /* Products */;
@@ -410,6 +412,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"\"-Xlinker -interposable\"",
+				);
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -491,9 +496,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"\"-Xlinker -interposable\"",
+				);
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -508,6 +515,7 @@
 				B6F73F9A71714086583985AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B6F73B0C0985B5CB59C8FFA1 /* Build configuration list for PBXNativeTarget "learnSwiftUITests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +524,7 @@
 				B6F73107A99FF2A5A452E5D6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B6F73B79783DD71C6B4F8EFE /* Build configuration list for PBXNativeTarget "learnSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +533,7 @@
 				B6F732C780D30E4B87A05CC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B6F73F2D2C2617320BFBEAFF /* Build configuration list for PBXProject "learnSwift" */ = {
 			isa = XCConfigurationList;
